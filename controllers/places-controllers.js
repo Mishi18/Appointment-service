@@ -31,6 +31,31 @@ const getPlaceById = async (req, res, next) => {
   res.json({ place: place.toObject({ getters: true }) });
 };
 
+const allPlaces = async (req, res, next) => {
+  
+
+  let place;
+  try {
+    place = await Place.find();
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not find a place.',
+      500
+    );
+    return next(error);
+  }
+
+  if (!place) {
+    const error = new HttpError(
+      'Could not find any places.',
+      404
+    );
+    return next(error);
+  }
+
+  res.json({ place: place.toObject({ getters: true }) });
+};
+
 
 
 const createPlace = async (req, res, next) => {
@@ -62,8 +87,6 @@ const createPlace = async (req, res, next) => {
 
   res.status(201).json({ place: createdPlace });
 };
-
-
 
 
 const updatePlace = async (req, res, next) => {
@@ -109,3 +132,4 @@ const updatePlace = async (req, res, next) => {
 exports.getPlaceById = getPlaceById;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;
+exports.allPlaces = allPlaces;
