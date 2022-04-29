@@ -6,6 +6,7 @@ const placesControllers = require('../controllers/places-controllers');
 const router = express.Router();
 
 router.get('/:pid', placesControllers.getPlaceById);
+router.get('/getAllPlaces', placesControllers.getAllPlaces);
 
 
 router.post(

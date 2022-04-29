@@ -31,7 +31,7 @@ const getPlaceById = async (req, res, next) => {
   res.json({ place: place.toObject({ getters: true }) });
 };
 
-const allPlaces = async (req, res, next) => {
+const getAllPlaces = async (req, res, next) => {
   
 
   let place;
@@ -132,4 +132,4 @@ const updatePlace = async (req, res, next) => {
 exports.getPlaceById = getPlaceById;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;
-exports.allPlaces = allPlaces;
+exports.getAllPlaces = getAllPlaces;
