@@ -4,11 +4,9 @@ const mongoose = require('mongoose');
 
 const HttpError = require('../models/http-error');
 const Place = require('../models/place');
-const User = require('../models/user');
 
 const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid;
-
   let place;
   try {
     place = await Place.findById(placeId);
@@ -31,29 +29,19 @@ const getPlaceById = async (req, res, next) => {
   res.json({ place: place.toObject({ getters: true }) });
 };
 
-const getAllPlaces = async (req, res, next) => {
-  
-
-  let place;
+const getPlaces = async (req, res, next) => {
+  let places;
   try {
-    place = await Place.find();
+    places = await Place.find({});
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, could not find a place.',
+      'Fetching places failed, please try again later.',
       500
     );
     return next(error);
   }
-
-  if (!place) {
-    const error = new HttpError(
-      'Could not find any places.',
-      404
-    );
-    return next(error);
-  }
-
-  res.json({ place: place.toObject({ getters: true }) });
+  //res.json(places)
+  res.json({ places: places.map(place => place.toObject({ getters: true })) });
 };
 
 
@@ -71,7 +59,7 @@ const createPlace = async (req, res, next) => {
     title,
     description,
     address,
-    
+
   });
   try {
 
@@ -132,4 +120,4 @@ const updatePlace = async (req, res, next) => {
 exports.getPlaceById = getPlaceById;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;
-exports.getAllPlaces = getAllPlaces;
+exports.getPlaces = getPlaces;
