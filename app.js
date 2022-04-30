@@ -2,14 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const placesRoutes = require('./routes/places-routes');
+const sellersRoutes = require('./routes/sellers-routes');
 const HttpError = require('./models/http-error');
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/api/places', placesRoutes);
+app.use('/api/sellers', sellersRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);
@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
 app.use((error, req, res, next) => {
 
-  
+
   if (res.headerSent) {
     return next(error);
   }

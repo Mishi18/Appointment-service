@@ -1,12 +1,12 @@
 const express = require('express');
 const { check } = require('express-validator');
 
-const placesControllers = require('../controllers/places-controllers');
+const sellersControllers = require('../controllers/sellers-controllers');
 
 const router = express.Router();
 
-router.get('/:pid', placesControllers.getPlaceById);
-router.get('/getPlaces/list', placesControllers.getPlaces);
+router.get('/:pid', sellersControllers.getSellerById);
+router.get('/getSellers/list', sellersControllers.getSellers);
 
 
 router.post(
@@ -20,7 +20,7 @@ router.post(
       .not()
       .isEmpty()
   ],
-  placesControllers.createPlace
+  sellersControllers.createSeller
 );
 
 router.patch(
@@ -29,9 +29,9 @@ router.patch(
     check('title')
       .not()
       .isEmpty(),
-    
+
   ],
-  placesControllers.updatePlace
+  sellersControllers.updateSeller
 );
 
 
