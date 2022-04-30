@@ -24,12 +24,12 @@ router.post(
 );
 
 router.patch(
-  '/:pid',
+  '/:pid/:slotId',
   [
     check('title')
       .not()
       .isEmpty(),
-    check('description').isLength({ min: 5 })
+    
   ],
   placesControllers.updatePlace
 );

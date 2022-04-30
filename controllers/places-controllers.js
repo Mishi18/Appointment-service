@@ -53,12 +53,13 @@ const createPlace = async (req, res, next) => {
       new HttpError('Invalid inputs passed, please check your data.', 422)
     );
   }
-  const { title, description, address } = req.body;
+  const { title, description, address , slots} = req.body;
 
   const createdPlace = new Place({
     title,
     description,
     address,
+    slots
 
   });
   try {
@@ -66,6 +67,7 @@ const createPlace = async (req, res, next) => {
     await createdPlace.save(createdPlace);
 
   } catch (err) {
+
     const error = new HttpError(
       'Creating place failed, please try again.',
       500
