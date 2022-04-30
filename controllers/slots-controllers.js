@@ -41,6 +41,19 @@ const getSlots = async (req, res, next) => {
     res.json({ slots: slots.map(slot => slot.toObject({ getters: true })) });
 };
 
+const getAllSlots = async (req, res, next) => {
+    let slots;
+    try {
+        slots = await Slot.find({ });
+    } catch (err) {
+        const error = new HttpError(
+            'Fetching slots failed, please try again later.',
+            500
+        );
+        return next(error);
+    }
+    res.json({ slots: slots.map(slot => slot.toObject({ getters: true })) });
+};
 
 
 const createSlot = async (req, res, next) => {
@@ -120,3 +133,4 @@ exports.getSlotById = getSlotById;
 exports.createSlot = createSlot;
 exports.rejectApprveSlot = rejectApprveSlot;
 exports.getSlots = getSlots;
+exports.getAllSlots = getAllSlots;

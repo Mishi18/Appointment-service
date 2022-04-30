@@ -5,6 +5,7 @@ const slotsControllers = require('../controllers/slots-controllers');
 
 const router = express.Router();
 
+router.get('/', slotsControllers.getAllSlots);
 router.get('/:slotId', slotsControllers.getSlotById);
 router.get('/:sellerId/getSlots/list', slotsControllers.getSlots);
 
