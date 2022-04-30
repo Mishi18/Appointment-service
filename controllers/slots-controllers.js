@@ -30,7 +30,7 @@ const getSlotById = async (req, res, next) => {
 const getSlots = async (req, res, next) => {
     let slots;
     try {
-        slots = await Slot.find({ sellerId: req.params.sellerId});
+        slots = await Slot.find({ sellerId: req.params.sellerId });
     } catch (err) {
         const error = new HttpError(
             'Fetching slots failed, please try again later.',
@@ -45,13 +45,13 @@ const getSlots = async (req, res, next) => {
 
 const createSlot = async (req, res, next) => {
     const errors = validationResult(req);
-    
+
     if (!errors.isEmpty()) {
         return next(
             new HttpError('Invalid inputs passed, please check your data.', 422)
         );
     }
-    const { name, slot,  } = req.body;
+    const { name, slot, } = req.body;
     const sellerId = req.params.sellerId;
 
     const createdSlot = new Slot({
@@ -82,12 +82,13 @@ const rejectApprveSlot = async (req, res, next) => {
         );
     }
 
-    const { rejected , approved } = req.body;
+    const { rejected, approved, booked } = req.body;
     const slotId = req.params.slotId;
 
     let slot;
     try {
         slot = await Slot.findById(slotId);
+        console.log('00000000000000000000000000000000000000', slot)
     } catch (err) {
         const error = new HttpError(
             'Something went wrong, could not update slot.',
@@ -98,10 +99,13 @@ const rejectApprveSlot = async (req, res, next) => {
 
     slot.rejected = rejected;
     slot.approved = approved;
+    slot.booked = booked;
+
 
     try {
         await slot.save();
     } catch (err) {
+        console.log('------------------------------------------', err)
         const error = new HttpError(
             'Something went wrong, could not update slot.',
             500

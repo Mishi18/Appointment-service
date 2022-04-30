@@ -24,7 +24,7 @@ router.post(
 );
 
 router.patch(
-    '/:sellerId/slotId',
+    '/:sellerId/:slotId',
     // [
     //     check('title')
     //         .not()
@@ -33,7 +33,6 @@ router.patch(
     // ],
     slotsControllers.rejectApprveSlot
 );
-
 
 
 
