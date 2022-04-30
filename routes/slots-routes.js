@@ -11,15 +11,15 @@ router.get('/:sellerId/getSlots/list', slotsControllers.getSlots);
 
 router.post(
     '/:sellerId',
-    [
-        check('name')
-            .not()
-            .isEmpty(),
+    // [
+    //     check('name')
+    //         .not()
+    //         .isEmpty(),
         
-        check('slot')
-            .not()
-            .isEmpty()
-    ],
+    //     check('slot')
+    //         .not()
+    //         .isEmpty()
+    // ],
     slotsControllers.createSlot
 );
 
