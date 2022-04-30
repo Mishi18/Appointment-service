@@ -5,7 +5,7 @@ const slotsControllers = require('../controllers/slots-controllers');
 
 const router = express.Router();
 
-router.get('/:sellerId/:slotId', slotsControllers.getSlotById);
+router.get('/:slotId', slotsControllers.getSlotById);
 router.get('/:sellerId/getSlots/list', slotsControllers.getSlots);
 
 
@@ -24,14 +24,14 @@ router.post(
 );
 
 router.patch(
-    '/:sellerId/:slotId',
+    '/:sellerId/slotId',
     // [
     //     check('title')
     //         .not()
     //         .isEmpty(),
 
     // ],
-    slotsControllers.rejectSlot
+    slotsControllers.rejectApprveSlot
 );
 
 

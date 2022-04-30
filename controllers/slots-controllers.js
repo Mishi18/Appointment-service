@@ -1,6 +1,4 @@
-const uuid = require('uuid/v4');
 const { validationResult } = require('express-validator');
-const mongoose = require('mongoose');
 
 const HttpError = require('../models/http-error');
 const Slot = require('../models/slot');
@@ -32,7 +30,7 @@ const getSlotById = async (req, res, next) => {
 const getSlots = async (req, res, next) => {
     let slots;
     try {
-        slots = await Slot.find({});
+        slots = await Slot.find({ sellerId: req.params.sellerId});
     } catch (err) {
         const error = new HttpError(
             'Fetching slots failed, please try again later.',
@@ -40,7 +38,6 @@ const getSlots = async (req, res, next) => {
         );
         return next(error);
     }
-    //res.json(slots)
     res.json({ slots: slots.map(slot => slot.toObject({ getters: true })) });
 };
 
@@ -48,16 +45,19 @@ const getSlots = async (req, res, next) => {
 
 const createSlot = async (req, res, next) => {
     const errors = validationResult(req);
-    console.log('**********************************************', errors)
+    
     if (!errors.isEmpty()) {
         return next(
             new HttpError('Invalid inputs passed, please check your data.', 422)
         );
     }
-    const { name, slot } = req.body;
+    const { name, slot,  } = req.body;
+    const sellerId = req.params.sellerId;
+
     const createdSlot = new Slot({
         name,
         slot,
+        sellerId
     });
     try {
         await createdSlot.save(createdSlot);
@@ -70,12 +70,11 @@ const createSlot = async (req, res, next) => {
         );
         return next(error);
     }
-
     res.status(201).json({ slot: createdSlot });
 };
 
 
-const rejectSlot = async (req, res, next) => {
+const rejectApprveSlot = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return next(
@@ -113,10 +112,7 @@ const rejectSlot = async (req, res, next) => {
     res.status(200).json({ slot: slot.toObject({ getters: true }) });
 };
 
-
-
-
 exports.getSlotById = getSlotById;
 exports.createSlot = createSlot;
-exports.rejectSlot = rejectSlot;
+exports.rejectApprveSlot = rejectApprveSlot;
 exports.getSlots = getSlots;

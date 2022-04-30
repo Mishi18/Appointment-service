@@ -6,10 +6,11 @@ const Schema = mongoose.Schema;
 const slotSchema = new Schema({
     name: { type: String, required: true },
     slot: { type: String, required: true },
-    //date: { type: Date, required: true },
-    booked: {type: Boolean, default: false},
-    approved: {type: Boolean, default: false},
-    rejected: { type: Boolean, default: false }
+    date: { type: Date, required: true },
+    booked: { type: Boolean, default: false },
+    approved: { type: Boolean, default: false },
+    rejected: { type: Boolean, default: false },
+    sellerId: { type: String, required: true }
 }
 );
 
