@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 
 const slotSchema = new Schema({
-    name: { type: String, required: true },
+    name: { type: String, required: false },
     slot: { type: String, required: true },
     date: { type: Date, required: false },
     booked: { type: Boolean, default: false },
