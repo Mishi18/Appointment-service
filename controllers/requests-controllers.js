@@ -15,7 +15,7 @@ const getRequests = async (req, res, next) => {
     const sellerId = req.query.sellerId
     
     try {
-        requests = await Request.find({}, { sellerId: sellerId });
+        requests = await Request.find({ sellerId: sellerId});
 
     } catch (err) {
         const error = new HttpError(
@@ -24,7 +24,7 @@ const getRequests = async (req, res, next) => {
         );
         return next(error);
     }
-    res.status(201).json({ request: requests });
+    res.json({ request: requests });
 };
 
 
