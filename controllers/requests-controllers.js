@@ -13,11 +13,9 @@ const Status = require('../status.enum')
 const getRequests = async (req, res, next) => {
     let requests;
     const sellerId = req.query.sellerId
-
-    console.log('-------------------------------------------', sellerId)
+    
     try {
         requests = await Request.find({}, { sellerId: sellerId });
-
 
     } catch (err) {
         const error = new HttpError(
@@ -26,10 +24,10 @@ const getRequests = async (req, res, next) => {
         );
         return next(error);
     }
-    //res.json(requests)
-    //res.json({ requests: requests.map(request => request.toObject({ getters: true })) });
     res.status(201).json({ request: requests });
 };
+
+
 
 const createRequest = async (req, res, next) => {
     const errors = validationResult(req);
@@ -41,16 +39,13 @@ const createRequest = async (req, res, next) => {
     const { userId, sellerId, slotID } = req.body;
     const status = Status.BOOKED;
 
-
     const slotObject = await Slot.findById(req.body.slotID);
 
     const createdRequest = new Request({
-
         userId,
         sellerId,
         slotID,
         status
-
     });
 
     try {
@@ -68,9 +63,6 @@ const createRequest = async (req, res, next) => {
         );
         return next(error);
     }
-
-
-
     res.status(201).json({ request: createdRequest });
 };
 
@@ -82,10 +74,8 @@ const updateRequest = async (req, res, next) => {
             new HttpError('Invalid inputs passed, please check your data.', 422)
         );
     }
-
     const { status } = req.body;
     const requestId = req.params.id;
-
     let request;
     try {
         request = await Request.findById(requestId);
@@ -108,7 +98,6 @@ const updateRequest = async (req, res, next) => {
         );
         return next(error);
     }
-
     res.status(200).json({ request: request.toObject({ getters: true }) });
 };
 

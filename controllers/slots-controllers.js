@@ -15,7 +15,6 @@ const getSlotById = async (req, res, next) => {
         );
         return next(error);
     }
-
     if (!slot) {
         const error = new HttpError(
             'Could not find a slot for the provided id.',
@@ -101,7 +100,6 @@ const rejectApprveSlot = async (req, res, next) => {
     let slot;
     try {
         slot = await Slot.findById(slotId);
-        console.log('00000000000000000000000000000000000000', slot)
     } catch (err) {
         const error = new HttpError(
             'Something went wrong, could not update slot.',
@@ -118,7 +116,6 @@ const rejectApprveSlot = async (req, res, next) => {
     try {
         await slot.save();
     } catch (err) {
-        console.log('------------------------------------------', err)
         const error = new HttpError(
             'Something went wrong, could not update slot.',
             500

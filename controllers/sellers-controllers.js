@@ -25,9 +25,9 @@ const getSellerById = async (req, res, next) => {
     );
     return next(error);
   }
-
   res.json({ seller: seller.toObject({ getters: true }) });
 };
+
 
 const getSellers = async (req, res, next) => {
   let sellers;
@@ -63,9 +63,8 @@ const createSeller = async (req, res, next) => {
 
   });
   try {
-
     await createdSeller.save(createdSeller);
-
+    
   } catch (err) {
 
     const error = new HttpError(
