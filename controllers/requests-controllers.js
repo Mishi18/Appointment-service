@@ -11,12 +11,30 @@ const Status = require('../status.enum')
 
 // CHECK EHIS
 const getRequests = async (req, res, next) => {
-    let requests;
+    const results = [];
     const sellerId = req.query.sellerId
-    
-    try {
-        requests = await Request.find({ sellerId: sellerId});
 
+    try {
+        const requests = await Request.find({ sellerId: sellerId });
+        const slots = await Slot.find({ sellerId: sellerId });
+
+        console.log('************************************************', requests);
+        console.log('---------------------------------------------------', slots)
+        requests.forEach((request) => {
+            slots.forEach((slot) => {
+
+                if (slot.id === request.slotId) {
+                    const res = {
+                        requets: request,
+                        slot: slot
+                    }
+                    
+                    results.push(res)
+                }
+            })
+
+        })
+        
     } catch (err) {
         const error = new HttpError(
             'Fetching requests failed, please try again later.',
@@ -24,7 +42,8 @@ const getRequests = async (req, res, next) => {
         );
         return next(error);
     }
-    res.json({ request: requests });
+
+    res.json({ results: results });
 };
 
 
