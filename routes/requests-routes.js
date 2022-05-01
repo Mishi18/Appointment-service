@@ -5,7 +5,7 @@ const requestsControllers = require('../controllers/requests-controllers');
 
 const router = express.Router();
 
-// router.get('/:pid', requestsControllers.getRequestById);
+router.get('/', requestsControllers.getRequests);
 // router.get('/getRequests/list', requestsControllers.getRequests);
 
 
@@ -23,16 +23,16 @@ router.post(
     requestsControllers.createRequest
 );
 
-// router.patch(
-//     '/:pid/:slotId',
-//     [
-//         check('title')
-//             .not()
-//             .isEmpty(),
+router.patch(
+    '/:id',
+    // [
+    //     check('title')
+    //         .not()
+    //         .isEmpty(),
 
-//     ],
-//     requestsControllers.updateRequest
-// );
+    // ],
+    requestsControllers.updateRequest
+);
 
 
 
