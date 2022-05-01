@@ -126,8 +126,33 @@ const rejectApprveSlot = async (req, res, next) => {
     res.status(200).json({ slot: slot.toObject({ getters: true }) });
 };
 
+
+const deleteSlot = async (req, res, next) => {
+    const slotId = req.params.id;
+
+    let slot;
+    try {
+        slot = await Slot.findById(slotId)
+        await slot.remove();
+    } catch (err) {
+        const error = new HttpError(
+            'Something went wrong, could not delete slot.',
+            500
+        );
+        return next(error);
+    }
+
+    if (!slot) {
+        const error = new HttpError('Could not find slot for this id.', 404);
+        return next(error);
+    }
+
+    res.status(200).json({ message: 'Deleted slot.' });
+};
+
 exports.getSlotById = getSlotById;
 exports.createSlot = createSlot;
 exports.rejectApprveSlot = rejectApprveSlot;
 exports.getSlots = getSlots;
 exports.getAllSlots = getAllSlots;
+exports.deleteSlot = deleteSlot;

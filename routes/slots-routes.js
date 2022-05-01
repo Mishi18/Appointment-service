@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/', slotsControllers.getAllSlots);
 router.get('/:slotId', slotsControllers.getSlotById);
 router.get('/:sellerId/getSlots/list', slotsControllers.getSlots);
+router.delete('/:id', slotsControllers.deleteSlot )
 
 
 router.post(
