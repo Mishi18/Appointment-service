@@ -40,7 +40,6 @@ const getSellers = async (req, res, next) => {
     );
     return next(error);
   }
-  //res.json(sellers)
   res.json({ sellers: sellers.map(seller => seller.toObject({ getters: true })) });
 };
 

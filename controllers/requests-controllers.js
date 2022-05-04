@@ -17,9 +17,7 @@ const getRequests = async (req, res, next) => {
     try {
         const requests = await Request.find({ sellerId: sellerId });
         const slots = await Slot.find({ sellerId: sellerId });
-
-        console.log('************************************************', requests);
-        console.log('---------------------------------------------------', slots)
+        
         requests.forEach((request) => {
             slots.forEach((slot) => {
 
